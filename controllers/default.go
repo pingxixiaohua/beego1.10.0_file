@@ -12,37 +12,10 @@ type MainController struct {
 	beego.Controller
 }
 
-type SecondController struct {
-	beego.Controller
-}
-
-/*
-	请求路径：/register
-	请求类型：POST
-	包含的数据：json数据格式提交
-		name, birthday, address, nick,
-	后台：接收并打印解析到的请求数据
-
-*/
-func (c *SecondController) Post() {
-	var information models.Information
-	dataBytes2, err := ioutil.ReadAll(c.Ctx.Request.Body)
-	if err != nil {
-		c.Ctx.WriteString("您好，数据解析错误")
-		return
-	}
-	err = json.Unmarshal(dataBytes2,&information)
-	if err != nil {
-		c.Ctx.WriteString("抱歉，数据解析错误，请重试")
-		return
-	}
-
-	fmt.Printf("姓名：%s\n生日：%s\n地址：%s\n昵称：%s\n",information.Name,information.Birthday,information.Address,information.Nick)
-
-	c.Ctx.WriteString("数据解析成功，恭喜你啊")
-}
 
 func (c *MainController) Get() {
+	//c.GetString("user") 直接返回相应的数据类型
+	//c.GetInt("psd")
 	userName := c.Ctx.Input.Query("user")
 	password := c.Ctx.Input.Query("psd")
 	//使用固定数据进行数据校验
